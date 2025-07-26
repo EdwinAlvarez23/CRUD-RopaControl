@@ -34,14 +34,6 @@ Este sistema permite aplicar conceptos clave de desarrollo de software, incluyen
 
 ---
 
-## Funcionalidades futuras (en planeación)
-
-- Autenticación por roles (administrador/empleado)
-- Filtros por categoría, precio o stock
-- Alertas de inventario bajo
-- Conexión con base de datos real (MySQL, Firebase)
----
-
 ## Instrucciones de uso
 
 1. Clona o descarga el repositorio.
