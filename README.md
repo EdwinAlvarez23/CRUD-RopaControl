@@ -1,10 +1,10 @@
-# 🧥 RopaControl – Sistema de Gestión de Inventario de Ropa
+# RopaControl – Sistema de Gestión de Inventario de Ropa
 
 Proyecto educativo desarrollado como parte del módulo **Ingeniería de Software II**, cuyo propósito es brindar una solución sencilla, funcional y escalable para el control de inventario en pequeños almacenes de ropa.
 
 ---
 
-## 🎯 Objetivos del proyecto
+## Objetivos del proyecto
 
 Este sistema permite aplicar conceptos clave de desarrollo de software, incluyendo:
 
@@ -15,7 +15,7 @@ Este sistema permite aplicar conceptos clave de desarrollo de software, incluyen
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+## Tecnologías utilizadas
 
 - HTML5
 - CSS3
@@ -25,24 +25,24 @@ Este sistema permite aplicar conceptos clave de desarrollo de software, incluyen
 
 ---
 
-## 🚀 Funcionalidades actuales
+## Funcionalidades actuales
 
-- ✅ Registro de productos (tipo de prenda, talla, precio)
-- ✅ Visualización dinámica en tabla
-- ✅ Edición y actualización de productos existentes
-- ✅ Eliminación de productos del inventario
+- Registro de productos (tipo de prenda, talla, precio)
+- Visualización dinámica en tabla
+- Edición y actualización de productos existentes
+- Eliminación de productos del inventario
 
 ---
 
-## 📌 Funcionalidades futuras (en planeación)
+## Funcionalidades futuras (en planeación)
 
-- 🔐 Autenticación por roles (administrador/empleado)
-- 📊 Filtros por categoría, precio o stock
-- 🛎️ Alertas de inventario bajo
-- 💾 Conexión con base de datos real (MySQL, Firebase)
+- Autenticación por roles (administrador/empleado)
+- Filtros por categoría, precio o stock
+- Alertas de inventario bajo
+- Conexión con base de datos real (MySQL, Firebase)
 ---
 
-## 📚 Instrucciones de uso
+## Instrucciones de uso
 
 1. Clona o descarga el repositorio.
 2. Abre el archivo `index.html` en tu navegador.
@@ -52,7 +52,7 @@ Este sistema permite aplicar conceptos clave de desarrollo de software, incluyen
 
 ---
 
-## 📄 Licencia y uso
+## Licencia y uso
 
 Este proyecto es **educativo** y está diseñado para fines formativos en Ingeniería de Software.  
 Eres libre de adaptarlo, extenderlo o compartirlo siempre que se mantenga el crédito académico.
