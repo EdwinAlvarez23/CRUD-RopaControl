@@ -17,9 +17,9 @@ Este sistema permite aplicar conceptos clave de desarrollo de software, incluyen
 
 ## Tecnologías utilizadas
 
-- HTML5
-- CSS3
-- JavaScript (puro)
+- HTML
+- CSS
+- JavaScript 
 - Patrón arquitectónico: **MVC**
 - Almacenamiento: **LocalStorage del navegador** (versión inicial)
 
