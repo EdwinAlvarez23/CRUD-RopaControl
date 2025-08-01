@@ -1,0 +1,224 @@
+/* Importa la fuente 'Poppins' desde Google Fonts con pesos 400 (normal) y 600 (semi-bold) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* ===================== */
+/* ESTILOS GLOBALES */
+/* ===================== */
+
+/* Establece el modelo de caja y fuente predeterminada para todos los elementos */
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Define estilos generales del cuerpo de la página */
+body {
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f6fa; /* Color de fondo claro */
+    color: #333; /* Texto en tono oscuro */
+}
+
+/* ===================== */
+/* ENCABEZADO CON LOGO Y TÍTULO */
+/* ===================== */
+
+.encabezado {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente */
+    padding: 20px;
+    background: linear-gradient(to right, #0077cc, #005fa3); /* Degradado azul */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    margin-bottom: 30px;
+    color: #fff; /* Texto blanco */
+}
+
+.bloque-central {
+    display: flex;
+    align-items: center; /* Alineación vertical */
+    gap: 15px; /* Espacio entre logo y texto */
+}
+
+/* Tamaño del logo en el encabezado */
+.logo-grande {
+    width: 80px;
+    height: auto;
+}
+
+/* Estilo del título principal */
+.titulo-principal {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 0;
+    color: #ffffff;
+}
+
+/* ===================== */
+/* TÍTULOS SECUNDARIOS */
+/* ===================== */
+
+h2 {
+    margin: 0 0 15px;
+    padding: 12px 20px;
+    background-color: #0077cc;
+    color: white;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* ===================== */
+/* SECCIONES */
+/* ===================== */
+
+/* Estilo de los bloques de contenido */
+section {
+    background-color: #ffffff;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+}
+
+/* ===================== */
+/* FORMULARIO DE PRODUCTO */
+/* ===================== */
+
+/* Estilo de etiquetas del formulario */
+form label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: 500;
+}
+
+/* Estilos comunes para inputs y selects */
+form input,
+form select {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+}
+
+/* Cambio de estilo al enfocar inputs o selects */
+form input:focus,
+form select:focus {
+    border-color: #0077cc;
+    outline: none;
+}
+
+/* Botón de envío del formulario */
+form button {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 600;
+}
+
+/* Efecto al pasar el cursor sobre el botón */
+form button:hover {
+    background-color: #45a049;
+    transform: scale(1.02); /* Ligero aumento de tamaño */
+}
+
+/* ===================== */
+/* TABLA DE PRODUCTOS */
+/* ===================== */
+
+/* Estilos generales de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Elimina espacios entre bordes */
+    margin-top: 15px;
+}
+
+/* Cabecera de la tabla */
+thead {
+    background-color: #0077cc;
+    color: white;
+}
+
+/* Celdas de la tabla */
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+/* ===================== */
+/* BOTONES DE ACCIÓN (Editar / Eliminar) */
+/* ===================== */
+
+.edit-btn,
+.delete-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* Botón editar */
+.edit-btn {
+    background-color: #007bff;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Botón eliminar */
+.delete-btn {
+    background-color: #dc3545;
+}
+
+.delete-btn:hover {
+    background-color: #a71d2a;
+}
+
+/* ===================== */
+/* RESPONSIVE (Para móviles y tablets) */
+/* ===================== */
+
+@media (max-width: 768px) {
+    /* Ajusta el tamaño de fuente en móviles */
+    form input,
+    form select,
+    form button {
+        font-size: 16px;
+    }
+
+    /* Reducción del tamaño del título */
+    .titulo-principal {
+        font-size: 1.6rem;
+        text-align: center;
+    }
+
+    /* Ajustes de tamaño de tabla */
+    table,
+    thead,
+    tbody,
+    th,
+    td {
+        font-size: 14px;
+    }
+
+    /* Cambia la disposición del logo y título */
+    .bloque-central {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .logo-grande {
+        margin-bottom: 10px;
+    }
+}
