@@ -66,7 +66,7 @@ RopaControl/
 2. Abre el archivo `index.html` en tu navegador.
 3. Usa el formulario para registrar nuevos productos.
 4. Visualiza, edita o elimina los productos desde la tabla interactiva.
-5. La información se guarda automáticamente en el navegador (LocalStorage) mediante una única instancia controlada por el Singleton.
+5. La información se guarda automáticamente en el navegador (LocalStorage) mediante una unica instancia controlada por el Singleton.
 
 ---
 
