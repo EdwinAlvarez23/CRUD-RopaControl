@@ -1,6 +1,6 @@
 # RopaControl – Sistema de Gestión de Inventario de Ropa versión-2.0-singleton
 
-Proyecto educativo desarrollado como parte del módulo **Ingeniería de Software II**, cuyo propósito es brindar una solución **sencilla, funcional y escalable** para el control de inventario en pequeños almacenes de ropa.
+Proyecto educativo desarrollado como parte del módulo Ingeniería de Software II, cuyo propósito es brindar una solución sencilla, funcional y escalable para el control de inventario en pequeños almacenes de ropa.
 
 ---
 
@@ -18,11 +18,11 @@ Este sistema permite aplicar conceptos clave del desarrollo de software, incluye
 
 ## Tecnologías Utilizadas
 
-- **HTML5**
-- **CSS3** (con diseño responsivo y personalizado)
-- **JavaScript modular**
-- **Patrón Singleton en JavaScript**
-- **Almacenamiento en LocalStorage**
+- HTML5
+- CSS3(con diseño responsivo y personalizado)
+- JavaScript modular
+- Patrón Singleton en JavaScript
+- Almacenamiento en LocalStorage
 
 ---
 
@@ -72,8 +72,8 @@ RopaControl/
 
 ## Licencia y Uso
 
-Este proyecto es **educativo** y está diseñado para fines **formativos** en Ingeniería de Software.  
-Eres libre de adaptarlo, extenderlo o compartirlo **siempre que se mantenga el crédito académico**.
+Este proyecto es educativo y está diseñado para fines formativos en Ingeniería de Software.  
+Eres libre de adaptarlo, extenderlo o compartirlo siempre que se mantenga el crédito académico.
 
 ---
 
