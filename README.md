@@ -1,75 +1,79 @@
-# RopaControl – Sistema de Gestión de Inventario de Ropa version-2.0-singleton
+# RopaControl – Sistema de Gestión de Inventario de Ropa versión-2.0-singleton
 
-Proyecto educativo desarrollado como parte del módulo **Ingeniería de Software II**, cuyo propósito es brindar una solución sencilla, funcional y escalable para el control de inventario en pequeños almacenes de ropa.
+Proyecto educativo desarrollado como parte del módulo **Ingeniería de Software II**, cuyo propósito es brindar una solución **sencilla, funcional y escalable** para el control de inventario en pequeños almacenes de ropa.
 
 ---
 
-## Objetivos del proyecto
+## Objetivos del Proyecto
 
-Este sistema permite aplicar conceptos clave de desarrollo de software, incluyendo:
+Este sistema permite aplicar conceptos clave del desarrollo de software, incluyendo:
 
 - **Arquitectura MVC (Modelo – Vista – Controlador):** separación de responsabilidades para una estructura más limpia y mantenible.
+- **Patrón de diseño Singleton:** garantiza una única instancia del gestor de almacenamiento, mejorando la eficiencia y el control del acceso a los datos.
 - **Desarrollo incremental:** implementación paso a paso de funcionalidades CRUD (Crear, Leer, Actualizar, Eliminar).
-- **Escalabilidad:** pensado para ser ampliado con nuevos módulos como autenticación, alertas, reportes y conexión a base de datos.
+- **Escalabilidad:** pensado para ser ampliado con nuevos módulos como autenticación, alertas, informes y conexión a base de datos.
 - **Colaboración y control de versiones:** uso de herramientas como Git para gestionar cambios en equipo.
 
 ---
 
-## Tecnologías utilizadas
+## Tecnologías Utilizadas
 
-- HTML5
-- CSS3 (con diseño responsivo y personalizado)
-- JavaScript (modular, con patrón Singleton)
-- Almacenamiento en LocalStorage
+- **HTML5**
+- **CSS3** (con diseño responsivo y personalizado)
+- **JavaScript modular**
+- **Patrón Singleton en JavaScript**
+- **Almacenamiento en LocalStorage**
 
 ---
 
-## Funcionalidades actuales
+## Funcionalidades Actuales
 
 - Registro de productos (tipo de prenda, talla, precio)
 - Visualización dinámica en tabla
 - Edición y actualización de productos existentes
 - Eliminación de productos del inventario
-- Busqueda mediante prendas y tallas
+- Búsqueda mediante prendas y tallas
+- Gestión centralizada del almacenamiento con Singleton: toda la lógica de acceso a `LocalStorage` es controlada desde una única instancia para evitar inconsistencias y mejorar el rendimiento.
 
 ---
-## Estructura del proyecto
+
+## Estructura del Proyecto
 
 RopaControl/
 ├── .vscode/
-│   └── settings.json
+│ └── settings.json
 ├── assets/
-│   ├── css/
-│   │   └── style.css
-│   ├── Logo.png
-│   └── Logoo.png
+│ ├── css/
+│ │ └── style.css
+│ ├── Logo.png
+│ └── Logoo.png
 ├── docs/
-│   └── instrucciones.txt
+│ └── instrucciones.txt
 ├── js/
-│   └── app.js
+│ └── app.js
 ├── singleton_EAlvarez/
-│   ├── singleton.js
-│   └── README.md
+│ ├── singleton.js
+│ └── README.md
 ├── .hintrc
 ├── index.html
 └── README.md
 
 ---
 
-## Instrucciones de uso
+## Instrucciones de Uso
 
 1. Clona o descarga el repositorio.
 2. Abre el archivo `index.html` en tu navegador.
 3. Usa el formulario para registrar nuevos productos.
 4. Visualiza, edita o elimina los productos desde la tabla interactiva.
-5. La información se guarda automáticamente en el navegador (LocalStorage).
+5. La información se guarda automáticamente en el navegador (LocalStorage) mediante una única instancia controlada por el Singleton.
 
 ---
 
-## Licencia y uso
+## Licencia y Uso
 
-Este proyecto es **educativo** y está diseñado para fines formativos en Ingeniería de Software.  
-Eres libre de adaptarlo, extenderlo o compartirlo siempre que se mantenga el crédito académico.
+Este proyecto es **educativo** y está diseñado para fines **formativos** en Ingeniería de Software.  
+Eres libre de adaptarlo, extenderlo o compartirlo **siempre que se mantenga el crédito académico**.
 
 ---
 
