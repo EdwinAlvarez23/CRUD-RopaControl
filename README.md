@@ -33,7 +33,7 @@ Este sistema permite aplicar conceptos clave del desarrollo de software, incluye
 - Edición y actualización de productos existentes
 - Eliminación de productos del inventario
 - Búsqueda mediante prendas y tallas
-- Gestión centralizada del almacenamiento con Singleton: toda la lógica de acceso a `LocalStorage` es controlada desde una única instancia para evitar inconsistencias y mejorar el rendimiento.
+- Separacion del singleton y el localstorage: El singleton controla desde una única instancia para evitar inconsistencias y mejorar el rendimiento del almacenamiento mientras que el storage maneja el almacenamiento local.
 
 ---
 
