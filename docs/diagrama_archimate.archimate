@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archimate:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:archimate="http://www.archimatetool.com/archimate" name="MVC + Singleton - Gestión de Ropa" id="id-model" version="5.0.0">
+  <folder name="Application" id="id-app-folder" type="application">
+    <element xsi:type="archimate:ApplicationInterface" name="[ Interfaz de Usuario ] (HTML + CSS)" id="id-ui"/>
+    <element xsi:type="archimate:ApplicationComponent" name="[ app.js ] (Lógica principal)" id="id-appjs"/>
+    <element xsi:type="archimate:ApplicationComponent" name="[ singleton.js ] (Instancia única)" id="id-singleton"/>
+    <element xsi:type="archimate:ApplicationComponent" name="[ storage.js ] (Gestión de localStorage)" id="id-storage"/>
+  </folder>
+  <folder name="Other" id="id-other-folder" type="other">
+    <element xsi:type="archimate:Grouping" name="Frontend (UI + app.js)" id="id-frontend-group"/>
+    <element xsi:type="archimate:Grouping" name="Backend lógico (singleton + storage)" id="id-backend-group"/>
+  </folder>
+  <folder name="Relations" id="id-relations-folder" type="relations">
+    <!-- Agrupaciones -->
+    <element xsi:type="archimate:CompositionRelationship" id="rel-ui-frontend" source="id-frontend-group" target="id-ui"/>
+    <element xsi:type="archimate:CompositionRelationship" id="rel-appjs-frontend" source="id-frontend-group" target="id-appjs"/>
+    <element xsi:type="archimate:CompositionRelationship" id="rel-singleton-backend" source="id-backend-group" target="id-singleton"/>
+    <element xsi:type="archimate:CompositionRelationship" id="rel-storage-backend" source="id-backend-group" target="id-storage"/>
+    <!-- Flujos -->
+    <element xsi:type="archimate:FlowRelationship" id="flow-appjs-singleton" source="id-appjs" target="id-singleton"/>
+    <element xsi:type="archimate:FlowRelationship" id="flow-singleton-storage" source="id-singleton" target="id-storage"/>
+    <!-- Conexión frontend-backend -->
+    <element xsi:type="archimate:TriggeringRelationship" id="trigger-frontend-backend" source="id-frontend-group" target="id-backend-group"/>
+  </folder>
+  <folder name="Views" id="id-views-folder" type="diagrams">
+    <element xsi:type="archimate:ArchimateDiagramModel" name="Arquitectura MVC + Singleton" id="id-diagram">
+      <!-- Frontend group -->
+      <child xsi:type="archimate:DiagramObject" id="id-diagram-frontend" textAlignment="1" archimateElement="id-frontend-group">
+        <bounds x="100" y="30" width="350" height="140"/>
+        <child xsi:type="archimate:DiagramObject" id="id-diagram-ui" archimateElement="id-ui">
+          <bounds x="20" y="50" width="140" height="50"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-diagram-appjs" archimateElement="id-appjs">
+          <bounds x="180" y="50" width="140" height="50"/>
+        </child>
+      </child>
+      <!-- Backend group -->
+      <child xsi:type="archimate:DiagramObject" id="id-diagram-backend" textAlignment="1" archimateElement="id-backend-group">
+        <bounds x="100" y="220" width="350" height="160"/>
+        <child xsi:type="archimate:DiagramObject" id="id-diagram-singleton" archimateElement="id-singleton">
+          <bounds x="20" y="40" width="140" height="50"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-diagram-storage" archimateElement="id-storage">
+          <bounds x="180" y="40" width="140" height="50"/>
+        </child>
+      </child>
+    </element>
+  </folder>
+</archimate:model>

@@ -1,74 +1,156 @@
-// Selección de elementos del DOM
-const formulario = document.getElementById('formulario-prenda');
-const inputNombre = document.getElementById('nombre');
-const inputCategoria = document.getElementById('categoria');
-const inputPrecio = document.getElementById('precio');
-const inputId = document.getElementById('prenda-id');
-const cuerpoTabla = document.getElementById('tabla-prendas-cuerpo');
+import StorageManager from '../singleton_ealvarez/singleton.js';
 
-// Evento al enviar el formulario
-formulario.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const nombre = inputNombre.value.trim();
-    const categoria = inputCategoria.value.trim();
-    const precio = parseFloat(inputPrecio.value).toFixed(2);
-
-    if (!nombre || !categoria || isNaN(precio)) return;
-
-    const prenda = {
-        id: inputId.value || Date.now().toString(),
-        nombre,
-        categoria,
-        precio
-    };
-
-    guardarPrenda(prenda); // Función del archivo storage.js
-    renderizarTabla();
-    formulario.reset();
-    inputId.value = '';
-});
-
-// Cargar datos de la prenda al formulario para editar
-function editarPrenda(id) {
-    const prenda = buscarPrendaPorId(id); // Función del archivo storage.js
-    if (!prenda) return;
-
-    inputNombre.value = prenda.nombre;
-    inputCategoria.value = prenda.categoria;
-    inputPrecio.value = prenda.precio;
-    inputId.value = prenda.id;
-}
-
-// Renderizar tabla con prendas
-function renderizarTabla() {
-    const prendas = obtenerPrendas(); // Función del archivo storage.js
-    cuerpoTabla.innerHTML = '';
-
-    prendas.forEach(prenda => {
-        const fila = document.createElement('tr');
-
-        fila.innerHTML = `
-            <td>${prenda.nombre}</td>
-            <td>${prenda.categoria}</td>
-            <td>$${prenda.precio}</td>
-            <td class="acciones">
-                <button class="editar-btn" onclick="editarPrenda('${prenda.id}')">Editar</button>
-                <button class="eliminar-btn" onclick="confirmarEliminacion('${prenda.id}')">Eliminar</button>
-            </td>
-        `;
-
-        cuerpoTabla.appendChild(fila);
-    });
-}
-
-// Confirmar y eliminar prenda
-function confirmarEliminacion(id) {
-    if (confirm('¿Estás seguro de que deseas eliminar esta prenda?')) {
-        eliminarPrenda(id); // Función del archivo storage.js
-        renderizarTabla();
+// ========================
+// MODELO
+// ========================
+class Ropa {
+    constructor(id, nombre, talla, precio) {
+        this.id = id;
+        this.nombre = nombre;
+        this.talla = talla;
+        this.precio = precio;
     }
 }
 
-// Mostrar prendas al iniciar
-renderizarTabla();
+// ========================
+// VISTA
+// ========================
+class RopaVista {
+    constructor() {
+        this.lista = document.getElementById("lista-ropa");
+        this.formulario = document.getElementById("formulario-ropa");
+        this.tipo = document.getElementById("tipo");
+        this.talla = document.getElementById("talla");
+        this.precio = document.getElementById("precio");
+        this.id = document.getElementById("id");
+    }
+
+    obtenerDatosFormulario() {
+        return {
+            id: this.id.value || Date.now().toString(),
+            tipo: this.tipo.value,
+            talla: this.talla.value,
+            precio: this.precio.value
+        };
+    }
+
+    limpiarFormulario() {
+        this.id.value = "";
+        this.tipo.value = "";
+        this.talla.value = "";
+        this.precio.value = "";
+    }
+
+    mostrarRopa(listaRopa) {
+        this.lista.innerHTML = "";
+        listaRopa.forEach(prenda => {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${prenda.id}</td>
+                <td>${prenda.nombre}</td>
+                <td>${prenda.talla}</td>
+                <td>${formatearPrecio(prenda.precio)}</td>
+                <td>
+                    <button class="edit-btn" data-id="${prenda.id}">Editar</button>
+                    <button class="delete-btn" data-id="${prenda.id}">Eliminar</button>
+                </td>
+            `;
+            this.lista.appendChild(fila);
+        });
+    }
+}
+
+// ========================
+// CONTROLADOR
+// ========================
+const vista = new RopaVista();
+
+function iniciarControlador() {
+    vista.formulario.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const datos = vista.obtenerDatosFormulario();
+
+        const prenda = new Ropa(datos.id, datos.tipo, datos.talla, datos.precio);
+        StorageManager.guardarPrenda(prenda);
+        vista.mostrarRopa(StorageManager.obtenerPrendas());
+        vista.limpiarFormulario();
+        document.getElementById("titulo-formulario").textContent = "Agregar Producto";
+    });
+
+    vista.lista.addEventListener("click", (e) => {
+        const id = e.target.dataset.id;
+        if (e.target.classList.contains("delete-btn")) {
+            StorageManager.eliminarPrenda(id);
+            vista.mostrarRopa(StorageManager.obtenerPrendas());
+        } else if (e.target.classList.contains("edit-btn")) {
+            const prenda = StorageManager.obtenerPrendas().find(p => p.id === id);
+            if (prenda) {
+                vista.id.value = prenda.id;
+                vista.tipo.value = prenda.nombre;
+
+                const evento = new Event('change');
+                vista.tipo.dispatchEvent(evento);
+
+                setTimeout(() => {
+                    vista.talla.value = prenda.talla;
+                }, 0);
+
+                vista.precio.value = prenda.precio;
+                document.getElementById("titulo-formulario").textContent = "Editar Producto";
+            }
+        }
+    });
+
+    vista.mostrarRopa(StorageManager.obtenerPrendas());
+}
+
+// ========================
+// INICIALIZACIÓN
+// ========================
+const tallasPorTipo = {
+    sueter: ['S', 'M', 'L', 'XL'],
+    pantalon: ['28', '30', '32', '34', '36'],
+    camisa: ['XS', 'S', 'M', 'L', 'XL'],
+    otra: ['Única']
+};
+
+function formatearPrecio(valor) {
+    return `$ ${parseFloat(valor).toLocaleString('es-CO')}`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    iniciarControlador();
+
+    const tipo = document.getElementById('tipo');
+    const talla = document.getElementById('talla');
+    const formulario = document.getElementById('formulario-ropa');
+    const tituloFormulario = document.getElementById('titulo-formulario');
+
+    tipo.addEventListener('change', () => {
+        const opciones = tallasPorTipo[tipo.value] || [];
+        talla.innerHTML = '<option value="" disabled selected>Talla</option>';
+        opciones.forEach(t => {
+            const option = document.createElement('option');
+            option.value = t;
+            option.textContent = t;
+            talla.appendChild(option);
+        });
+    });
+
+    formulario.addEventListener('submit', () => {
+        const id = document.getElementById('id').value;
+        tituloFormulario.textContent = id ? "Editar producto" : "Agregar producto";
+    });
+
+    document.getElementById("busqueda").addEventListener("input", function () {
+        const termino = this.value.toLowerCase();
+        const prendas = StorageManager.obtenerPrendas();
+
+        const filtradas = prendas.filter(prenda =>
+            prenda.nombre.toLowerCase().includes(termino) ||
+            prenda.talla.toLowerCase().includes(termino)
+        );
+
+        vista.mostrarRopa(filtradas);
+    });
+});

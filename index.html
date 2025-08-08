@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RopaControl</title>
     <link rel="icon" href="assets/Logo.png" type="image/png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <h1 class="titulo-principal">Gestión de inventario de ropa</h1>
-
+   <header class="encabezado">
+    <div class="bloque-central">
+        <img src="assets/Logoo.png" alt="Logo" class="logo-grande">
+        <h1 class="titulo-principal">Gestión de inventario de ropa</h1>
+    </div>
+</header>
     <form id="formulario-ropa">
         <h2 id="titulo-formulario" class="fondo-azul">Agregar producto</h2>
         <input type="hidden" id="id">
@@ -35,6 +39,9 @@
     </form>
 
     <h2 class="fondo-azul">Tabla de productos</h2>
+
+    <input type="text" id="busqueda" placeholder="Buscar por tipo o talla" style="margin-bottom: 10px; padding: 5px; width: 100%;">
+
     <table>
         <thead>
             <tr>
@@ -47,7 +54,8 @@
         </thead>
         <tbody id="lista-ropa"></tbody>
     </table>
-    <script type="module" src="./js/main.js"></script>
-    <script type="module" src="./controllers/ropaController.js"></script>
+ <script type="module" src="./js/storage.js"></script>
+ <script type="module" src="./singleton_ealvarez/singleton.js"></script>
+ <script type="module" src="./js/app.js"></script>
 </body>
 </html>
