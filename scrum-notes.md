@@ -20,7 +20,7 @@ Integrar el patrón **Singleton** en `singleton.js` para centralizar la gestión
 - [x] Crear `storage.js` para gestionar la persistencia con `localStorage`.  
 - [x] Implementar `singleton.js` para garantizar una única instancia del gestor de almacenamiento.  
 - [x] Adaptar `app.js` para que utilice el `StorageManager` del Singleton en lugar de manejar directamente el almacenamiento.
-- [x]Verificar funcionamiento de agregar y eliminar productos  
+- [x] Verificar funcionamiento de agregar y eliminar productos  
 - [ ] Agregar funcionalidad para **editar productos** con persistencia.  
 
 
