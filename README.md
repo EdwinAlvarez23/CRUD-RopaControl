@@ -98,4 +98,5 @@ Eres libre de adaptarlo, extenderlo o compartirlo siempre que se mantenga el cr�
 - Luis Alberto Montiel Diaz  
 **Fecha:** 09/08/2025  
 **Materia:** Ingeniería de Software II
+
 **Versión:** 2.1 – CRUD modular con Singleton y manejo de almacenamiento externo
