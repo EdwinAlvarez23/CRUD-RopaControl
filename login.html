@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inicio de Sesión</title>
+  <link rel="icon" href="assets/Logo.png" type="image/png">
+  <link rel="stylesheet" href="assets/css/login.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Mensaje flotante -->
+    <div id="message" class="message"></div>
+
+    <!-- Login Principal -->
+    <div id="loginCard" class="card">
+      <h2>Inicio de Sesión</h2>
+      <input type="text" id="username" placeholder="Nombre de usuario" />
+      <input type="password" id="password" placeholder="Contraseña" />
+      <div class="button-group">
+        <button onclick="login('admin')">Iniciar como Administrador</button>
+        <button onclick="login('employee')">Iniciar como Empleado</button>
+      </div>
+      <p class="link" onclick="requestAdminAuth()">Crear nuevo usuario</p>
+      <p class="link" onclick="showDeleteUserForm()">Eliminar usuario</p>
+      <p class="link" onclick="showRecoverPasswordForm()">¿Olvidaste tu contraseña?</p>
+    </div>
+
+    <!-- Autenticarse como administrador -->
+    <div id="admin-auth" class="hidden card">
+      <h2>Autenticarse como Administrador</h2>
+      <input type="text" id="adminAuthUsername" placeholder="Usuario administrador">
+      <input type="password" id="adminAuthPassword" placeholder="Contraseña">
+      <button onclick="verifyAdmin()">Continuar</button>
+      <button class="back-btn" onclick="backToLogin()">Volver</button>
+    </div>
+
+    <!-- Crear usuario -->
+    <div id="create-user" class="hidden card">
+      <h2>Crear Usuario</h2>
+      <input type="text" id="newUsername" placeholder="Nuevo usuario">
+      <input type="password" id="newPassword" placeholder="Nueva contraseña">
+      <select id="newRole">
+        <option value="admin">Administrador</option>
+        <option value="employee">Empleado</option>
+      </select>
+      <button onclick="createUser()">Crear Usuario</button>
+      <button class="back-btn" onclick="backToLogin()">Volver</button>
+    </div>
+
+<!-- Autenticación para eliminar usuario -->
+<div id="delete-user-auth" class="hidden card">
+  <h2>Autenticarse para Eliminar Usuario</h2>
+  <input type="text" id="deleteAuthUsername" placeholder="Usuario administrador">
+  <input type="password" id="deleteAuthPassword" placeholder="Contraseña">
+  <button onclick="verifyDeleteAdmin()">Continuar</button>
+  <button class="back-btn" onclick="backToLogin()">Volver</button>
+</div>
+
+
+<!-- Eliminar usuario -->
+<div id="delete-user" class="hidden card">
+  <h2>Eliminar Usuario</h2>
+  <input type="text" id="deleteUsername" placeholder="Usuario a eliminar">
+  <button onclick="deleteUser()">Eliminar</button>
+  <button class="back-btn" onclick="backToLogin()">Volver</button>
+</div>
+
+
+    <!-- Recuperar contraseña -->
+    <div id="recover-password" class="hidden card">
+      <h2>Recuperar Contraseña</h2>
+      <input type="text" id="recoverUsername" placeholder="Nombre de usuario">
+      <button onclick="recoverPassword()">Recuperar</button>
+      <button class="back-btn" onclick="backToLogin()">Volver</button>
+    </div>
+  </div>
+  <script src="js/login.js"></script>
+</body>
+</html>

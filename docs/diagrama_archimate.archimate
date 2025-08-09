@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archimate:model xmlns:archimate="http://www.opengroup.org/xsd/archimate/3.0/"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 identifier="id-model-1"
+                 name="Diagrama Diseño Software CRUD con Login y Roles"
+                 version="1.0">
+
+  <archimate:elements>
+    <!-- 1. Frontend -->
+    <archimate:element identifier="id-frontend" xsi:type="archimate:ApplicationComponent" name="Frontend"/>
+    <archimate:element identifier="id-ui" xsi:type="archimate:ApplicationComponent" name="Interfaz de Usuario (HTML + CSS)"/>
+    <archimate:element identifier="id-appjs" xsi:type="archimate:ApplicationComponent" name="Punto de Entrada CRUD (app.js)"/>
+    <archimate:element identifier="id-loginhtml" xsi:type="archimate:ApplicationComponent" name="Pantalla de Login (login.html)"/>
+    <archimate:element identifier="id-loginjs" xsi:type="archimate:ApplicationComponent" name="Lógica de Login (login.js)"/>
+    <archimate:element identifier="id-css" xsi:type="archimate:Artifact" name="Archivos CSS"/>
+
+    <!-- 2. Backend Lógico -->
+    <archimate:element identifier="id-backend" xsi:type="archimate:ApplicationComponent" name="Backend Lógico"/>
+    <archimate:element identifier="id-singletonjs" xsi:type="archimate:ApplicationComponent" name="singleton.js"/>
+    <archimate:element identifier="id-storagejs" xsi:type="archimate:ApplicationComponent" name="storage.js"/>
+
+    <!-- 3. Módulo de Autenticación -->
+    <archimate:element identifier="id-auth" xsi:type="archimate:ApplicationComponent" name="Módulo de Autenticación"/>
+    <archimate:element identifier="id-auth-loginjs" xsi:type="archimate:ApplicationComponent" name="login.js (validación, roles, sesión)"/>
+    <archimate:element identifier="id-auth-loginhtml" xsi:type="archimate:ApplicationComponent" name="login.html (formulario de acceso)"/>
+  </archimate:elements>
+
+  <archimate:relationships>
+    <!-- Composición Frontend -->
+    <archimate:relationship identifier="rel-frontend-ui" xsi:type="archimate:CompositionRelationship" source="id-frontend" target="id-ui"/>
+    <archimate:relationship identifier="rel-frontend-appjs" xsi:type="archimate:CompositionRelationship" source="id-frontend" target="id-appjs"/>
+    <archimate:relationship identifier="rel-frontend-loginhtml" xsi:type="archimate:CompositionRelationship" source="id-frontend" target="id-loginhtml"/>
+    <archimate:relationship identifier="rel-frontend-loginjs" xsi:type="archimate:CompositionRelationship" source="id-frontend" target="id-loginjs"/>
+    <archimate:relationship identifier="rel-frontend-css" xsi:type="archimate:CompositionRelationship" source="id-frontend" target="id-css"/>
+
+    <!-- Composición Backend -->
+    <archimate:relationship identifier="rel-backend-singleton" xsi:type="archimate:CompositionRelationship" source="id-backend" target="id-singletonjs"/>
+    <archimate:relationship identifier="rel-backend-storage" xsi:type="archimate:CompositionRelationship" source="id-backend" target="id-storagejs"/>
+
+    <!-- Composición Módulo Autenticación -->
+    <archimate:relationship identifier="rel-auth-loginjs" xsi:type="archimate:CompositionRelationship" source="id-auth" target="id-auth-loginjs"/>
+    <archimate:relationship identifier="rel-auth-loginhtml" xsi:type="archimate:CompositionRelationship" source="id-auth" target="id-auth-loginhtml"/>
+
+    <!-- Conexiones -->
+    <archimate:relationship identifier="rel-appjs-to-backend" xsi:type="archimate:ServingRelationship" source="id-appjs" target="id-backend"/>
+    <archimate:relationship identifier="rel-singleton-to-storage" xsi:type="archimate:ServingRelationship" source="id-singletonjs" target="id-storagejs"/>
+    <archimate:relationship identifier="rel-loginjs-to-backend" xsi:type="archimate:ServingRelationship" source="id-loginjs" target="id-backend"/>
+    <archimate:relationship identifier="rel-auth-to-frontend" xsi:type="archimate:ServingRelationship" source="id-auth" target="id-frontend"/>
+    <archimate:relationship identifier="rel-auth-to-backend" xsi:type="archimate:ServingRelationship" source="id-auth" target="id-backend"/>
+  </archimate:relationships>
+
+</archimate:model>
