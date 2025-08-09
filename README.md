@@ -1,4 +1,4 @@
-# RopaControl – Sistema de Gestión de Inventario de Ropa versión-2.1-storage-refactor
+# RopaControl – Sistema de Gestión de Inventario de Ropa versión-mejora de interfaz
 
 Proyecto educativo desarrollado como parte del módulo Ingeniería de Software II, cuyo propósito es brindar una solución sencilla, funcional y escalable para el control de inventario en pequeños almacenes de ropa. En esta versión se integran el patrón Singleton, la modularización del almacenamiento mediante storage.js y una interfaz moderna y responsiva.
 
