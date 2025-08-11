@@ -88,9 +88,9 @@ RopaControl/
 
 ## Mejora de la Interfaz de Usuario (rama interfaz)
 
-En esta etapa se propuso un rediseño de la interfaz gráfica para optimizar la claridad, eficiencia y experiencia de usuario. Aunque las nuevas funcionalidades ya han sido implementadas parcialmente, se han realizado los siguientes aportes:  
+En esta etapa se propuso un rediseño de la interfaz gráfica para optimizar la claridad, eficiencia y experiencia de usuario. Aunque las nuevas funcionalidades ya han sido implementadas, se han realizado los siguientes aportes:  
 
-**Diseño digital y boceto a mano** del nuevo flujo de interfaz para administrador y empleado.  
+**Diseño digital y boceto a mano** del nuevo flujo de interfaz para el inicio de sesion, administrador y empleado.  
 **Inclusión de campos adicionales** para registrar la cantidad y la descripción del producto.  
 **Control numérico** para ajustar la cantidad de productos de forma precisa.  
 **Botones de acción con íconos intuitivos** para agregar, editar y eliminar productos.  
