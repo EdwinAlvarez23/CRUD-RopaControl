@@ -93,9 +93,7 @@ Eres libre de adaptarlo, extenderlo o compartirlo siempre que se mantenga el cr�
 ---
 
 **Autor:**  
-- Edwin Fabián Álvarez Jiménez 
-- Jesus Esteban Alvarez Jimenez
-- Luis Alberto Montiel Diaz  
+- Edwin Fabián Álvarez Jiménez  
 **Fecha:** 09/08/2025  
 **Materia:** Ingeniería de Software II
 **Versión:** 2.1 – CRUD modular con Singleton y manejo de almacenamiento externo
