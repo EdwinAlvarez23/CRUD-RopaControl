@@ -1,4 +1,4 @@
-### 💡 Implementación del Patrón de Diseño Singleton
+### Implementación del Patrón de Diseño Singleton
 
 El patrón **Singleton** es un patrón de diseño creacional que asegura que una clase tenga una **única instancia** y que se pueda acceder a ella de forma global desde cualquier parte de la aplicación. Es ideal para gestionar recursos compartidos, como por ejemplo, el **almacenamiento local** del navegador.
 
