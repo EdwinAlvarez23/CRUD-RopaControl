@@ -4,9 +4,9 @@ import StorageManager from '../singleton_ealvarez/singleton.js';
 // MODELO
 // ========================
 class Ropa {
-    constructor(id, nombre, talla, precio, cantidad, descripcion) {
+    constructor(id, tipo, talla, precio, cantidad, descripcion) {
         this.id = id;
-        this.nombre = nombre;
+        this.tipo = tipo;
         this.talla = talla;
         this.precio = precio;
         this.cantidad = cantidad;
@@ -34,8 +34,8 @@ class RopaVista {
             id: this.id.value || Date.now().toString(),
             tipo: this.tipo.value,
             talla: this.talla.value,
-            precio: this.precio.value,
-            cantidad: this.cantidad.value,
+            precio: parseFloat(this.precio.value) || 0,
+            cantidad: parseInt(this.cantidad.value) || 0,
             descripcion: this.descripcion.value
         };
     }
@@ -43,105 +43,63 @@ class RopaVista {
     limpiarFormulario() {
         this.id.value = "";
         this.tipo.value = "";
-        this.talla.value = "";
+        this.talla.innerHTML = '<option value="" disabled selected>Talla</option>';
         this.precio.value = "";
         this.cantidad.value = "";
         this.descripcion.value = "";
     }
 
-mostrarRopa(listaRopa) {
-    this.lista.innerHTML = "";
-    listaRopa.forEach(prenda => {
-        const fila = document.createElement("tr");
-        fila.innerHTML = `
-            <td>${prenda.id}</td>
-            <td>${prenda.nombre}</td>
-            <td>${prenda.talla}</td>
-            <td>${formatearPrecio(prenda.precio)}</td>
-            <td>${prenda.cantidad}</td>
-            <td>${prenda.descripcion}</td>
-            <td>
-                <button class="edit-btn" data-id="${prenda.id}">
-                    <i class="fas fa-edit"></i> Editar
-                </button>
-                <button class="delete-btn" data-id="${prenda.id}">
-                    <i class="fas fa-trash-alt"></i> Eliminar
-                </button>
-            </td>
-        `;
-        this.lista.appendChild(fila);
-    });
-}
+    mostrarRopa(listaRopa, esEmpleado = false) {
+        this.lista.innerHTML = "";
 
+        // Ocultar la columna de acciones si es empleado
+        const thAcciones = document.querySelector("th.acciones-col");
+        if (esEmpleado && thAcciones) {
+            thAcciones.remove();
+        }
+
+        listaRopa.forEach(prenda => {
+            const fila = document.createElement("tr");
+
+            if (esEmpleado) {
+                // Solo mostrar datos básicos sin acciones
+                fila.innerHTML = `
+                    <td>${prenda.id}</td>
+                    <td>${prenda.tipo}</td>
+                    <td>${prenda.talla}</td>
+                    <td>${formatearPrecio(prenda.precio)}</td>
+                    <td>${prenda.cantidad}</td>
+                    <td>${prenda.descripcion}</td>
+                `;
+            } else {
+                // Mostrar tabla completa con botones
+                fila.innerHTML = `
+                    <td>${prenda.id}</td>
+                    <td>${prenda.tipo}</td>
+                    <td>${prenda.talla}</td>
+                    <td>${formatearPrecio(prenda.precio)}</td>
+                    <td>${prenda.cantidad}</td>
+                    <td>${prenda.descripcion}</td>
+                    <td>
+                        <button class="edit-btn" data-id="${prenda.id}">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="delete-btn" data-id="${prenda.id}">
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                        </button>
+                    </td>
+                `;
+            }
+
+            this.lista.appendChild(fila);
+        });
+    }
 }
 
 // ========================
 // CONTROLADOR
 // ========================
 const vista = new RopaVista();
-
-function iniciarControlador() {
-    vista.formulario.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const datos = vista.obtenerDatosFormulario();
-
-    const prenda = new Ropa(
-        datos.id,
-        datos.tipo,
-        datos.talla,
-        datos.precio,
-        datos.cantidad,
-        datos.descripcion
-    );
-
-    const prendas = StorageManager.obtenerPrendas();
-    const existe = prendas.some(p => p.id === prenda.id);
-
-    if (existe) {
-        mostrarMensaje("Producto editado con éxito", "warning");
-    } else {
-        mostrarMensaje("Producto guardado correctamente", "success");
-    }
-
-    StorageManager.guardarPrenda(prenda);
-    vista.mostrarRopa(StorageManager.obtenerPrendas());
-    vista.limpiarFormulario();
-    document.getElementById("titulo-formulario").textContent = "Agregar Producto";
-});
-
-    vista.lista.addEventListener("click", (e) => {
-        const id = e.target.dataset.id;
-       if (e.target.classList.contains("delete-btn")) {
-    StorageManager.eliminarPrenda(id);
-    vista.mostrarRopa(StorageManager.obtenerPrendas());
-    mostrarMensaje("Producto eliminado correctamente", "error");
-     } else if (e.target.classList.contains("edit-btn")) {
-            const prenda = StorageManager.obtenerPrendas().find(p => p.id === id);
-            if (prenda) {
-                vista.id.value = prenda.id;
-                vista.tipo.value = prenda.nombre;
-
-                const evento = new Event('change');
-                vista.tipo.dispatchEvent(evento);
-
-                setTimeout(() => {
-                    vista.talla.value = prenda.talla;
-                }, 0);
-
-                vista.precio.value = prenda.precio;
-                vista.cantidad.value = prenda.cantidad;
-                vista.descripcion.value = prenda.descripcion;
-                document.getElementById("titulo-formulario").textContent = "Editar Producto";
-            }
-        }
-    });
-
-    vista.mostrarRopa(StorageManager.obtenerPrendas());
-}
-
-// ========================
-// INICIALIZACIÓN
-// ========================
 const tallasPorTipo = {
     sueter: ['S', 'M', 'L', 'XL'],
     pantalon: ['28', '30', '32', '34', '36'],
@@ -153,43 +111,112 @@ function formatearPrecio(valor) {
     return `$ ${parseFloat(valor).toLocaleString('es-CO')}`;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    iniciarControlador();
+// Función para controlar visibilidad según rol
+async function controlarVisibilidadPorRol() {
+    const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
+    const esEmpleado = usuarioActual && (usuarioActual.rol === "empleado" || usuarioActual.role === "employee");
 
-    const tipo = document.getElementById('tipo');
-    const talla = document.getElementById('talla');
-    const formulario = document.getElementById('formulario-ropa');
-    const tituloFormulario = document.getElementById('titulo-formulario');
+    // Ocultar formulario si es empleado
+    if (esEmpleado && vista.formulario) {
+        vista.formulario.style.display = "none";
+    }
 
-    tipo.addEventListener('change', () => {
-        const opciones = tallasPorTipo[tipo.value] || [];
-        talla.innerHTML = '<option value="" disabled selected>Talla</option>';
+    // Obtener prendas
+    const listaPrendas = await StorageManager.obtenerPrendas();
+    vista.mostrarRopa(listaPrendas, esEmpleado);
+}
+
+// Iniciar controlador para admin
+async function iniciarControlador() {
+    // Cambio de tipo -> actualizar tallas
+    vista.tipo.addEventListener("change", () => {
+        const opciones = tallasPorTipo[vista.tipo.value] || [];
+        vista.talla.innerHTML = '<option value="" disabled selected>Talla</option>';
         opciones.forEach(t => {
             const option = document.createElement('option');
             option.value = t;
             option.textContent = t;
-            talla.appendChild(option);
+            vista.talla.appendChild(option);
         });
     });
 
-    formulario.addEventListener('submit', () => {
-        const id = document.getElementById('id').value;
-        tituloFormulario.textContent = id ? "Editar producto" : "Agregar producto";
+    // Guardar o editar prenda
+    vista.formulario.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const datos = vista.obtenerDatosFormulario();
+        const prenda = new Ropa(datos.id, datos.tipo, datos.talla, datos.precio, datos.cantidad, datos.descripcion);
+
+        const listaPrendas = await StorageManager.obtenerPrendas();
+        const existe = listaPrendas.some(p => p.id === prenda.id);
+
+        if (existe) {
+            await StorageManager.actualizarPrenda(prenda);
+            mostrarMensaje("Producto editado con éxito", "warning");
+        } else {
+            await StorageManager.guardarPrenda(prenda);
+            mostrarMensaje("Producto guardado correctamente", "success");
+        }
+
+        // Refrescar lista
+        const listaActualizada = await StorageManager.obtenerPrendas();
+        vista.mostrarRopa(listaActualizada);
+        vista.limpiarFormulario();
+        document.getElementById("titulo-formulario").textContent = "Agregar Producto";
     });
 
-    document.getElementById("busqueda").addEventListener("input", function () {
+    // Editar o eliminar desde la lista
+    vista.lista.addEventListener("click", async (e) => {
+        const id = e.target.dataset.id;
+        if (!id) return;
+
+        if (e.target.classList.contains("delete-btn")) {
+            await StorageManager.eliminarPrenda(id);
+            const listaActualizada = await StorageManager.obtenerPrendas();
+            vista.mostrarRopa(listaActualizada);
+            mostrarMensaje("Producto eliminado correctamente", "error");
+        }
+
+        if (e.target.classList.contains("edit-btn")) {
+            const prenda = (await StorageManager.obtenerPrendas()).find(p => p.id === id);
+            if (!prenda) return;
+
+            vista.id.value = prenda.id;
+            vista.tipo.value = prenda.tipo;
+
+            // Llenar tallas según tipo
+            const evento = new Event('change');
+            vista.tipo.dispatchEvent(evento);
+
+            // Seleccionar la talla correspondiente
+            vista.talla.value = prenda.talla;
+
+            vista.precio.value = prenda.precio;
+            vista.cantidad.value = prenda.cantidad;
+            vista.descripcion.value = prenda.descripcion;
+            document.getElementById("titulo-formulario").textContent = "Editar Producto";
+        }
+    });
+
+    // Buscador
+    document.getElementById("busqueda").addEventListener("input", async function () {
         const termino = this.value.toLowerCase();
-        const prendas = StorageManager.obtenerPrendas();
+        const prendas = await StorageManager.obtenerPrendas();
 
         const filtradas = prendas.filter(prenda =>
-            prenda.nombre.toLowerCase().includes(termino) ||
+            prenda.tipo.toLowerCase().includes(termino) ||
             prenda.talla.toLowerCase().includes(termino)
         );
 
-        vista.mostrarRopa(filtradas);
-        
+        const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
+        const esEmpleado = usuarioActual && (usuarioActual.rol === "empleado" || usuarioActual.role === "employee");
+
+        vista.mostrarRopa(filtradas, esEmpleado);
     });
-});
+}
+
+// ========================
+// MENSAJES
+// ========================
 function mostrarMensaje(texto, tipo = "success") {
     const mensaje = document.getElementById("mensaje");
     mensaje.textContent = texto;
@@ -200,80 +227,19 @@ function mostrarMensaje(texto, tipo = "success") {
         mensaje.style.display = "none";
     }, 3000);
 }
-document.addEventListener("DOMContentLoaded", () => {
-  const logoutBtn = document.getElementById("logoutBtn");
 
-  logoutBtn.addEventListener("click", () => {
-    // Limpia datos de sesión (si guardaste algo, bórralo aquí)
-    // localStorage.removeItem('usuarioActual'); // ← si usas una clave así
+// ========================
+// INICIALIZACIÓN
+// ========================
+document.addEventListener("DOMContentLoaded", async () => {
+    await controlarVisibilidadPorRol(); // Control de visibilidad según rol
+    await iniciarControlador();         // Inicializar eventos
 
-    // Simplemente redirige al login
-    window.location.href = "login.html";
-  });
-});
-document.addEventListener("DOMContentLoaded", () => {
-  const logoutBtn = document.getElementById("logoutBtn");
-  const formulario = document.getElementById("formulario-ropa");
-  const acciones = document.querySelectorAll(".edit-btn, .delete-btn");
-
-  const usuarioActual = localStorage.getItem("usuarioActual");
-  if (usuarioActual) {
-    const user = JSON.parse(usuarioActual);
-    if (user.rol === "empleado") {
-      // Oculta formulario de agregar producto
-      if (formulario) formulario.style.display = "none";
-
-      // Oculta botones de editar y eliminar después de renderizar productos
-      setTimeout(() => {
-        document.querySelectorAll(".edit-btn, .delete-btn").forEach(btn => {
-          btn.style.display = "none";
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("usuarioActual");
+            window.location.href = "login.html";
         });
-      }, 100);
     }
-  }
-
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("usuarioActual");
-      window.location.href = "login.html";
-    });
-  }
 });
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
-
-    if (usuarioActual && usuarioActual.role === "employee") {
-      // Ocultar el formulario
-      const formulario = document.getElementById("formulario-ropa");
-      if (formulario) formulario.style.display = "none";
-
-      // Ocultar la cabecera de acciones
-      const thAcciones = document.querySelector("th.acciones-col");
-      if (thAcciones) thAcciones.remove(); // Eliminamos completamente
-
-      // Función para limpiar las acciones de cada fila
-      const limpiarAcciones = () => {
-        document.querySelectorAll("#lista-ropa tr").forEach(tr => {
-          const tdAcciones = tr.querySelector("td:last-child");
-          if (tdAcciones) tdAcciones.remove(); // Eliminamos toda la celda
-        });
-      };
-
-      // Observar cambios en la tabla y limpiar cada vez que se agregue contenido
-      const listaRopa = document.getElementById("lista-ropa");
-
-      const observer = new MutationObserver((mutationsList) => {
-        for (const mutation of mutationsList) {
-          if (mutation.type === "childList") {
-            limpiarAcciones();
-          }
-        }
-      });
-
-      observer.observe(listaRopa, { childList: true });
-
-      // Llamada inicial por si ya hay datos cargados
-      limpiarAcciones();
-    }
-  });
